@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  Badge,
+  Container,
+  FormControl,
+  Nav,
+  Navbar,
+  NavbarBrand,
+} from "react-bootstrap";
+import { FaShoppingCart } from "react-icons/fa";
+import Header from "./components/Header";
+import "./App.css";
+import Dropdown from "react-bootstrap/Dropdown";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar bg="dark" variant="dark" style={{ height: 80 }}>
+        <Container>
+          <Navbar.Brand>
+            <a href="#">Shopping Cart</a>
+          </Navbar.Brand>
+          <Navbar.Text className="search">
+            <FormControl
+              style={{ width: 500 }}
+              placeholder="Search for product"
+              className="m-auto"
+            />
+          </Navbar.Text>
+          <Nav>
+            <Dropdown alignRight>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                <FaShoppingCart color="white" fontSize="25px" />
+                {/* <Badge style={{ fontSize: 5 }}>{10}</Badge> */}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu style={{ minWidth: 370 }}>
+                <span style={{ padding: 5 }}>Cart is empty!</span>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Nav>
+        </Container>
+      </Navbar>
+    </>
   );
 }
 
