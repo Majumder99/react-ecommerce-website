@@ -15,7 +15,7 @@ const Home = () => {
     <div className="home">
       <Filters />
       <div className="productContainer">
-        {products.map((prod) => {
+        {products.slice(1, 16).map((prod) => {
           return <SingleProduct prod={prod} key={prod.id} />;
         })}
       </div>
