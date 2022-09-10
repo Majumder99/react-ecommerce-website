@@ -8,7 +8,6 @@ import Filters from "./Filters";
 const Home = () => {
   const {
     state: { products },
-    dispatch,
   } = useContext(Cart);
   // console.log(products);
   return (

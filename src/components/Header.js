@@ -1,9 +1,25 @@
-import { Badge, Container, FormControl, Nav, Navbar } from "react-bootstrap";
+import {
+  Badge,
+  Container,
+  FormControl,
+  Nav,
+  Navbar,
+  Button,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import "../App.css";
+import "./styles.css";
 import Dropdown from "react-bootstrap/Dropdown";
+import { useContext } from "react";
+import { Cart } from "../context/Context";
+import { AiFillDelete } from "react-icons/ai";
 const Header = () => {
+  const {
+    state: { cart },
+    dispatch,
+  } = useContext(Cart);
+  // console.log(cart);
   return (
     <>
       <Navbar bg="dark" variant="dark" style={{ height: 80 }}>
@@ -22,11 +38,50 @@ const Header = () => {
             <Dropdown alignRight>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
                 <FaShoppingCart color="white" fontSize="25px" />
-                {/* <Badge style={{ fontSize: 5 }}>{10}</Badge> */}
+                <Badge
+                  className="badge-class"
+                  bg="success"
+                  style={{ fontSize: 15 }}
+                >
+                  {cart.length}
+                </Badge>
               </Dropdown.Toggle>
 
-              <Dropdown.Menu style={{ minWidth: 370 }}>
-                <span style={{ padding: 5 }}>Cart is empty!</span>
+              <Dropdown.Menu style={{ minWidth: 280 }}>
+                {cart.length > 0 ? (
+                  <>
+                    {cart.map((prod) => (
+                      <div className="cartitem" key={prod.id}>
+                        <img
+                          src={prod.image}
+                          className="cartItemImg"
+                          alt={prod.name}
+                        />
+                        <div className="cartItemDetail">
+                          <span>{prod.name}</span>
+                          <span>${prod.price.split(".")[0]}</span>
+                        </div>
+                        <AiFillDelete
+                          fontSize="20px"
+                          style={{ cursor: "pointer" }}
+                          onClick={() =>
+                            dispatch({
+                              type: "REMOVE_FROM_CART",
+                              payload: prod,
+                            })
+                          }
+                        />
+                      </div>
+                    ))}
+                    <Link to="/cart">
+                      <Button style={{ width: "95%", margin: "0 10px" }}>
+                        Go To Cart
+                      </Button>
+                    </Link>
+                  </>
+                ) : (
+                  <span style={{ padding: 5 }}>Cart is empty!</span>
+                )}
               </Dropdown.Menu>
             </Dropdown>
           </Nav>
